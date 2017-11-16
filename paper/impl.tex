@@ -1,0 +1,19 @@
+\section{Grafter Implementation}
+{\grafter} takes a pair of clones and an existing test suite as input and constrasts the runtime behavior of the clones. The core of {\grafter} is to transplant test cases between clones so that {\grafter} can exercise clones with the same test. This section briefly discusses the transplantation process of {\grafter}. The details are described in our previous work~\cite{zhang2017automated}.
+
+\noindent{\bf Variation identification.} {\grafter} first perform inter-procedural analysis to identify the input and output parameters referenced by each clone and its subroutines to expose its de-facto testing interface. {\grafter} then matches the input and output parameters between clones and detect the paramaters that are defined in one clone but not in the counterpart clone.
+
+\noindent{\bf Code transplantation.} Simply copying and pasting a clone in place of its counterpart clone could lead to compilation errors due to variations in clone content. {\grafter} applies five transplantation
+rules to ensure type safety during code transplantation.  
+
+\noindent{\bf Data propagation.} Similar to how surgeons reattach blood vessels to ensure the
+blood in the recipient flows correctly to the vessels of the transplanted organ, {\grafter} also needs to make sure the input data flows correctly into the grafted clone and the updated values flows back to the same assertion check of the original test. Therefore, {\grafter} applies four heuristics to insert stub code to
+ensure that (1) newly declared variables consume the same input data as their counterparts in the recipient and (2) the updated values flow back to the same test oracle.
+
+\noindent{\bf Differential testing.} {\grafter} supports behavior comparison at two levels. The test-level comparison runs the same test on two clones and compares the test outcomes. If a test succeeds on one clone but fails on the other, behavior divergence is noted. The state-level comparison compares the intermediate program states for affected variables at the exit(s) of the clones. {\grafter} instruments code clones to capture the updated program states at the exit(s) of clones. {\grafter} uses the XStream library\footnote{\url{http://x-stream.github.io/}} to serialize the program states of affected variables in an XML format. Then it checks if two clones update corresponding variables with the same values.
+
+{\grafter} is built on top of an open-source visual diff and merge tool, JMeld.\footnote{\url{https://github.com/albfan/jmeld}} Configure {\grafter} and run it using the following command. The user configuration file asks the user to speficy the source and test folders in a project as well as the build system in the command so that {\grafter} can perform the test coverage analysis.
+
+\begin{lstlisting}
+$ java -jar grafter.jar /path/to/your/config/file
+\end{lstlisting}

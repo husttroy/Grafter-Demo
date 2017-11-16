@@ -1,0 +1,85 @@
+\begin{figure*}[!ht]
+\begin{minipage}[t]{0.49\linewidth}
+\begin{lstlisting}[style=MyJavaSmallStyle]
+public class Copy extends Task{
+ private IncludePatternSet includes;
+
+ public void setIncludes(String patterns){
+   ...
+   if(patterns != null && patterns.length() > 0){
+-    StringTokenizer tok=new StringTokenizer(patterns,",");
+-    while(tok.hasMoreTokens()){
+-      includes.addPattern(tok.next());
+-    }
++    String[] tokens = StringUtils.split(patterns, ",");
++    for(String tok : tokens){
++      includes.addPattern(tok);
++    }
+   }
+ }
+  ...
+}
+
+public class IncludePatternSet{
+ public Set<String> set;
+ public void addPattern(String s) { set.add(s); }
+  ...
+}
+
+\end{lstlisting}
+\vspace{-2mm}
+\begin{center}\begin{footnotesize}(a) Correctly edited clone in the Copy class\end{footnotesize}\end{center}
+\end{minipage}
+%
+\begin{minipage}[t]{0.49\linewidth}
+\begin{lstlisting}[style=MyJavaSmallStyle]
+public class Delete extends Task{
+ private ExcludePatternSet excludes;
+
+ public void setExcludes(String patterns){
+   ...
+   if(patterns != null && patterns.length() > 0){
+-    StringTokenizer tok=new StringTokenizer(patterns,",");
+-    while(tok.hasMoreTokens()){
+-      excludes.addPattern(tok.next());
+-    }
++    String[] tokens = StringUtils.split(patterns, ".");
++    for(String tok : tokens){
++      excludes.addPattern(tok);
++    }
+   }
+ }
+  ...
+}
+
+public class ExcludePatternSet{
+ public Set<String> set;
+ public void addPattern(String s) { set.add(s); }
+  ...
+}
+\end{lstlisting}
+\vspace{-2mm}
+\begin{center}\begin{footnotesize}(b) Inconsistenly edited clone in the Delete class\end{footnotesize}\end{center}
+\end{minipage}
+\caption{Similar edits to update the use of {\ttt StringTokenizer} API to {\ttt StringUtils.split} in {\ttt Copy} and {\ttt Delete}.}% The programmer mistakenly changes the string separator from a comma to a period (line 11 in the {\ttt Delete} class). Code deletions are marked with `-' and additions are marked with `+'. }
+\label{fig:example}
+\vspace{-4mm}
+\end{figure*}
+
+\begin{figure}[!th]
+ \centering
+ \begin{lstlisting}[style=MyJavaSmallStyle]
+@Test
+public void testCopy(){
+  Task copyTask = FileUtils.createTask(FileUtils.COPY);
+  ...
+  copyTask.setIncludes("src/*.java, test/*.java");
+  JobHandler.fireEvent(copyTask);
+  assertTrue(checkFileCopied());
+}
+\end{lstlisting}
+\vspace{-3mm}
+\caption{A test case for the {\ttt Copy} class.}% It copies java files in the src folder and the test folder to a target directory and checks if all matched files are copied by calling the {\ttt checkFileCopied} method.}
+\label{fig:test}
+\vspace{-6mm}
+\end{figure}

@@ -1,0 +1,102 @@
+% ==================================================
+% FSE demo paper
+%    4 pages in the ACM proceedings format, including all text, references and figures.
+%
+%   Accompanied by:
+%     1. a link to screencast of 5 to 10 minutes
+%     2. a link to the website for this tool
+%     3. information on tool availability and maturity 
+%
+%   Paper    submission : November 20, 2017
+%   Author   notification : January 22, 2018
+%   Camera-ready deadline : February 12, 2018
+% ==================================================
+\documentclass[sigconf]{acmart}
+%\pdfpagewidth=8.5in
+%\pdfpageheight=11in
+\input{macros}
+
+\setcopyright{rightsretained}
+
+% correct bad hyphenation here
+\hyphenation{op-tical net-works semi-conduc-tor}
+
+\begin{document}
+
+\title{Grafter: Examine Clone Behavior via Test Transplation}
+
+%\numberofauthors{1}
+%\author{\alignauthor Tianyi Zhang$^{\ast}$~~~Myoungkyu Song$^{\dag}$~~~Miryung Kim$^{\ast}$\\
+%	\affaddr{$^{\ast}$University of California, Los Angeles, USA \hspace*{3em} $^{\dag}$University of Texas at Austin, USA}\\
+%	\email{tianyi.zhang@cs.ucla.edu, mksong1117@utexas.edu, miryung@cs.ucla.edu}
+%}
+
+% ==================================================
+% abstract
+% ==================================================
+\input{abstract}
+
+%\begin{CCSXML}
+%<ccs2012>
+%<concept>
+%<concept_id>10002944.10011123.10010912</concept_id>
+%<concept_desc>General and reference~Empirical studies</concept_desc>
+%<concept_significance>300</concept_significance>
+%</concept>
+%<concept>
+%<concept_id>10011007.10010940.10011003.10011004</concept_id>
+%<concept_desc>Software and its engineering~Software reliability</concept_desc>
+%<concept_significance>300</concept_significance>
+%</concept>
+%<concept>
+%<concept_id>10011007.10011074.10011134</concept_id>
+%<concept_desc>Software and its engineering~Collaboration in software development</concept_desc>
+%<concept_significance>300</concept_significance>
+%</concept>
+%</ccs2012>
+%\end{CCSXML}
+%
+%\ccsdesc[300]{General and reference~Empirical studies}
+%\ccsdesc[300]{Software and its engineering~Software reliability}
+%\ccsdesc[300]{Software and its engineering~Collaboration in software development}
+
+\keywords{Code clones, software transplantation, differential testing}  
+
+\maketitle
+
+% ==================================================
+% Introduction
+% ==================================================
+\input{intro}
+
+% ==================================================
+% Motivating Example and Tool Features
+% ==================================================
+%\input{motive}
+
+% ==================================================
+% Implementation
+% ==================================================
+\input{impl}
+
+% ==================================================
+% Step-by-step Demonstration
+% ==================================================
+\input{demo}
+
+% ==================================================
+% Related Work
+% ==================================================
+\input{related}
+
+% ==================================================
+% Summary
+% ==================================================
+\input{summary}
+
+%\section{Acknowledgement} 
+
+\balance
+\bibliographystyle{ACM-Reference-Format}
+\bibliography{grafter}
+\end{document}
